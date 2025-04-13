@@ -1,14 +1,27 @@
 package com.example.backend.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api")
 public class HelloController {
-    @GetMapping("/hello")
-    public String sayHello() {
+
+    private List<String> employeeList = new ArrayList<>(List.of("John", "Alice", "Bob"));
+
+    @GetMapping("/api/hello")
+    public String hello() {
         return "Hello from Spring Boot!";
+    }
+
+    @GetMapping("/api/employees")
+    public List<String> getEmployees() {
+        return employeeList;
+    }
+
+    @PostMapping("/api/employees")
+    public void addEmployee(@RequestBody String name) {
+        employeeList.add(name.replace("\"", ""));
     }
 }
